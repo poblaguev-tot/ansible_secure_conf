@@ -1,0 +1,8 @@
+- name: Secure VM configuration
+  hosts: all
+  vars_files:
+    - keys/ssh_keys.yml
+  roles:
+    - fail2ban_configure
+    - iptables_configure
+    - sshd_configure

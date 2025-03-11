@@ -1,0 +1,82 @@
+---
+
+- name: Disallow root login
+  ansible.builtin.replace:
+    path: '{{ config_path }}'
+    regexp: '^#?PermitRootLogin\s+.*$'
+    replace: 'PermitRootLogin no'
+
+- name: Allow PubkeyAuthentication
+  ansible.builtin.replace:
+    path: '{{ config_path }}'
+    regexp: '^#?PubkeyAuthentication\s+yes.*$'
+    replace: 'PubkeyAuthentication yes'
+
+- name: Disallow PasswordAuthentication 
+  ansible.builtin.replace:
+    path: '{{ config_path }}'
+    regexp: '^#?PasswordAuthentication\s+yes.*$'
+    replace: 'PasswordAuthentication no'
+
+- name: Allow login only for user kali
+  ansible.builtin.lineinfile:
+    path: '{{ config_path }}'
+    line: "AllowUsers kali"
+
+- name: Disallow X11Forwarding
+  ansible.builtin.replace:
+    path: '{{ config_path }}'
+    regexp: '^#?X11Forwarding\s+no.*$'
+    replace: 'X11Forwarding no'
+
+- name: Change LoginGraceTime
+  ansible.builtin.replace:
+    path: '{{ config_path }}'
+    regexp: '^#?LoginGraceTime\s+2m.*$'
+    replace: 'LoginGraceTime 1m'
+
+- name: Change MaxAuthTries
+  ansible.builtin.replace:
+    path: '{{ config_path }}'
+    regexp: '^#?MaxAuthTries\s+6.*$'
+    replace: 'MaxAuthTries 3'
+
+- name: Change MaxSessions
+  ansible.builtin.replace:
+    path: '{{ config_path }}'
+    regexp: '^#?MaxSessions\s+10.*$'
+    replace: 'MaxSessions 2'                
+
+- name: Allow only protocol 2
+  ansible.builtin.lineinfile:
+    path: '{{ config_path }}'
+    line: "Protocol 2"
+
+- name: Change LogLevel
+  ansible.builtin.replace:
+    path: '{{ config_path }}'
+    regexp: '^#?LogLevel\s+INFO.*$'
+    replace: 'LogLevel VERBOSE'  
+
+- name: Change ClientAliveInterval
+  ansible.builtin.replace:
+    path: '{{ config_path }}'
+    regexp: '^#?ClientAliveInterval\s+0.*$'
+    replace: 'ClientAliveInterval 600' 
+
+- name: Change ClientAliveCountMax
+  ansible.builtin.replace:
+    path: '{{ config_path }}'
+    regexp: '^#?ClientAliveCountMax\s+3.*$'
+    replace: 'ClientAliveCountMax 0' 
+
+- name: Add public key to authorized_keys
+  ansible.builtin.authorized_key:
+    user: '{{ user }}'
+    state: present
+    key: "{{ public_key }}"
+
+- name: Restart sshd service
+  service:
+    name: sshd
+    state: restarted

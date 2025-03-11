@@ -1,0 +1,9 @@
+---
+# vars for ssh_configure
+
+config_path: /etc/ssh/sshd_config
+
+ssh_key_filename: id_ed25519
+
+user: kali
+group: kali
