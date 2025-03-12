@@ -4,4 +4,4 @@
   ansible.builtin.service:
     name: knockd
     state: restarted
-    enable: yes
+    enabled: yes
