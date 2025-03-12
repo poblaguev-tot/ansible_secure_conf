@@ -1,1 +1,1 @@
-target ansible_host=10.0.2.21 ansible_connection=ssh ansible_ssh_pass=kali ansible_user=kali ansible_become=yes ansible_become_password=kali
+target ansible_host=$HOST_IP ansible_connection=ssh ansible_ssh_pass=$SSH_PASS ansible_user=$SSH_USER ansible_become=yes ansible_become_password=$SUDO_PASS
