@@ -3,7 +3,7 @@
 
 config_path: /etc/ssh/sshd_config
 
-ssh_key_filename: id_ed25519
+ssh_key_filename: id_$algorithm
 
-user: kali
-group: kali
+user: $USER
+group: $GROUP
