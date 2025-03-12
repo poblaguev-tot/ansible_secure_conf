@@ -1,0 +1,13 @@
+---
+
+- name: Install knockd
+  package:
+    name: knockd
+    state: present
+
+- name: Deploy knockd configuration template
+  template:
+    src: knockd_conf.j2
+    dest: /etc/knockd.conf
+  notify: Restart knockd
+

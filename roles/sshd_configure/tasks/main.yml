@@ -6,16 +6,34 @@
     regexp: '^#?PermitRootLogin\s+.*$'
     replace: 'PermitRootLogin no'
 
+- name: Disallow empty password
+  ansible.builtin.replace:
+    path: '{{ config_path }}'
+    regexp: '^#?PermitEmptyPasswords\s+.*$'
+    replace: 'PermitEmptyPasswords no' 
+
+- name: Disallow hostbasedAuthentication
+  ansible.builtin.replace:
+    path: '{{ config_path }}'
+    regexp: '^#?HostbasedAuthentication\s+.*$'
+    replace: 'HostbasedAuthentication no' 
+
+- name: Disallow user environment
+  ansible.builtin.replace:
+    path: '{{ config_path }}'
+    regexp: '^#?PermitUserEnvironment\s+.*$'
+    replace: 'PermitUserEnvironment no' 
+
 - name: Allow PubkeyAuthentication
   ansible.builtin.replace:
     path: '{{ config_path }}'
-    regexp: '^#?PubkeyAuthentication\s+yes.*$'
+    regexp: '^#?PubkeyAuthentication\s+.*$'
     replace: 'PubkeyAuthentication yes'
 
 - name: Disallow PasswordAuthentication 
   ansible.builtin.replace:
     path: '{{ config_path }}'
-    regexp: '^#?PasswordAuthentication\s+yes.*$'
+    regexp: '^#?PasswordAuthentication\s+.*$'
     replace: 'PasswordAuthentication no'
 
 - name: Allow login only for user kali
@@ -26,7 +44,7 @@
 - name: Disallow X11Forwarding
   ansible.builtin.replace:
     path: '{{ config_path }}'
-    regexp: '^#?X11Forwarding\s+no.*$'
+    regexp: "^X11Forwarding\\s+yes.*$"
     replace: 'X11Forwarding no'
 
 - name: Change LoginGraceTime

@@ -1,0 +1,14 @@
+[options]
+    UseSyslog
+
+[openSSH]
+    sequence = {{ open_ssh_sequence | join(',') }}
+    seq_timeout = {{ open_ssh_seq_timeout }}
+    command = {{ open_ssh_command }}
+    tcpflags = {{ tcpflag }}
+
+[closeSSH]
+    sequence = {{ close_ssh_sequence | join(',') }}
+    seq_timeout = {{ close_ssh_seq_timeout }}
+    command = {{ close_ssh_command }}
+    tcpflags = {{ tcpflag }}

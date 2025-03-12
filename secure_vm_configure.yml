@@ -6,3 +6,16 @@
     - fail2ban_configure
     - iptables_configure
     - sshd_configure
+    - port_knocking
+    - portspoof
+  tasks:
+    - name: Configure linux kernel security
+      ansible.builtin.copy:
+        dest: /etc/sysctl.d/kernel_security.conf
+        content: |
+          kernel.randomize_va_space = 2
+          kernel.kptr_restrict = 2
+          kernel.sysrq = 0
+          kernel.dmesg_restrict = 1
+    - name: Apply configuration
+      ansible.builtin.command: sysctl --system

@@ -1,0 +1,39 @@
+---
+
+- name: Install dependencies
+  package:
+    name: "{{ item }}"
+    state: present
+  loop: '{{ dependencies_for_portspoof }}'
+
+- name: Clone a repo with portspoof git directory
+  ansible.builtin.git:
+    repo: 'https://github.com/drk1wi/portspoof.git'
+    dest: /opt/portspoof
+
+- name: Configure portspoof
+  ansible.builtin.shell: |
+    bash configure
+  args:
+    chdir: /opt/portspoof
+
+- name: Compile portspoof
+  ansible.builtin.shell: |
+    make
+  args:
+    chdir: /opt/portspoof
+
+- name: Install portspoof
+  ansible.builtin.shell: |
+    sudo make install
+  args:
+    chdir: /opt/portspoof
+
+- name: Change permissions of portspoof
+  ansible.builtin.file:
+    path: /opt/portspoof/system_files/init.d/portspoof.sh
+    mode: '0755'
+
+- name: Start portspoof
+  ansible.builtin.shell: |
+    sudo /opt/portspoof/system_files/init.d/portspoof.sh start '{{ network_interface }}'

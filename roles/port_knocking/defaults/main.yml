@@ -1,0 +1,9 @@
+---
+
+open_ssh_sequence: 444 555 666
+open_ssh_seq_timeout: 5
+open_ssh_command: /usr/sbin/iptables -A INPUT -s %IP% -p tcp --dport 22 -j ACCEPT
+tcpflag: syn
+close_ssh_sequence: 666 555 444
+close_ssh_seq_timeout: 5
+close_ssh_command: /usr/sbin/iptables -D INPUT -s %IP% -p tcp --dport 22 -j ACCEPT

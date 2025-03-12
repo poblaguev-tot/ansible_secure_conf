@@ -1,0 +1,6 @@
+---
+
+dependencies_for_portspoof:
+  - gcc
+  - g++
+  - make
