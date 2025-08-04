@@ -1,63 +1,20 @@
-diskSpace
-
-ping
-
-livenessState
-
-readinessState
-
-db
-
-mongo
-
-cassandra
-
-redis
-
-elasticsearch
-
-neo4j
-
-jms
-
-rabbit
-
-kafka
-
-solr
-
-mail
-
-ftp
-
-ldap
-
-vault
-
-broker
-
-broker/us1
-
-broker/us2
-
-customService
-
-externalApi
-
-random
-
-aws
-
-consul
-
-zookeeper
-
-hazelcast
-
-influxdb
-
-couchbase
-
-actuator
-
-application
+health	Состояние приложения и его компонентов
+info	Общая информация о приложении (например, версия, описание)
+metrics	Метрики приложения (CPU, память, HTTP, кастомные)
+beans	Список всех Spring Beans
+env	Переменные окружения и свойства конфигурации
+loggers	Управление уровнями логирования
+caches	Информация о кэшах
+conditions	Условия автоконфигурации
+configprops	Все @ConfigurationProperties
+auditevents	Аудит-события (например, вход/выход пользователей)
+httpexchanges	Последние HTTP-запросы и ответы
+mappings	Все @RequestMapping маршруты
+scheduledtasks	Запланированные задачи
+threaddump	Снимок потоков приложения
+startup	Этапы запуска приложения
+shutdown	Завершение работы приложения (по умолчанию отключён)
+sessions	Сессии пользователей (если используется Spring Session)
+flyway / liquibase	Миграции базы данных (если используются соответствующие библиотеки)
+integrationgraph	Граф интеграции Spring Integration (если подключён)
+quartz
