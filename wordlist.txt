@@ -2,3 +2,15 @@ $encrypted = Get-Content "C:\Tools\PowerView.enc" -Raw
 $bytes = [Convert]::FromBase64String($encrypted.Trim())
 $moduleContent = [System.Text.Encoding]::UTF8.GetString($bytes)
 New-Module -ScriptBlock ([ScriptBlock]::Create($moduleContent)) -Name PowerView
+
+
+try {
+    [System.Reflection.Assembly]::LoadWithPartialName("System.DirectoryServices") | Out-Null
+    [System.Reflection.Assembly]::LoadWithPartialName("System.DirectoryServices.AccountManagement") | Out-Null
+    
+    Write-Host "+"
+} catch {
+    Write-Host "-: $_"
+}
+
+Find-InterestingACL -ResolveGUIDs
