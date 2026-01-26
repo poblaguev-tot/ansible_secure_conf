@@ -1,136 +1,27 @@
-pdf
-doc
-docx
-rtf
-txt
-odt
-xps
-epub
-mobi
-xls
-xlsx
-csv
-ods
-jpeg
-jpg
-png
-gif
-bmp
-tiff
-tif
-svg
-webp
-ico
-psd
-ai
-eps
-raw
-cr2
-nef
-arw
-mp3
-wav
-flac
-aac
-wma
-ogg
-m4a
-mid
-midi
-mp4
-avi
-mkv
-mov
-wmv
-flv
-webm
-mpeg
-mpg
-3gp
-vob
-exe
-msi
-bat
-cmd
-com
-scr
-bin
-run
-sh
-deb
-rpm
-app
-dmg
-pkg
-jar
-apk
-ipa
-dll
-sys
-drv
-ocx
-html
-htm
-css
-js
-php
-asp
-aspx
-xml
-json
-zip
-rar
-7z
-tar
-gz
-iso
-mdb
-accdb
-sql
-db
-sqlite
-sqlite3
-mdf
-cs
-cpp
-cxx
-cc
-c
-java
-py
-rb
-pl
-ppt
-pptx
-pps
-ppsx
-odp
-key
-pem
-crt
-cer
-pfx
-p12
-rom
-nes
-snes
-sav
-mod
-dwg
-dxf
-stl
-obj
-fbx
-tmp
-log
-ini
-cfg
-conf
-reg
-inf
-ps1
-vbs
-pyw
-class
-so
-dylib
+$modulePath = "C:\Tools\PowerView.ps1"
+$moduleContent = Get-Content $modulePath -Raw
+$compressed = [System.IO.Compression.GZipStream]::new(
+    [System.IO.MemoryStream]::new([System.Text.Encoding]::UTF8.GetBytes($moduleContent)),
+    [System.IO.Compression.CompressionMode]::Compress
+)
+$ms = New-Object System.IO.MemoryStream
+$compressed.CopyTo($ms)
+$compressed.Close()
+$base64 = [Convert]::ToBase64String($ms.ToArray())
+$base64 | Out-File "C:\Tools\PowerView.enc" -Encoding ASCII
+
+
+
+
+
+$encrypted = Get-Content "C:\Tools\PowerView.enc"
+
+$bytes = [Convert]::FromBase64String($encrypted)
+$ms = New-Object System.IO.MemoryStream(,$bytes)
+$gzip = [System.IO.Compression.GZipStream]::new($ms, [System.IO.Compression.CompressionMode]::Decompress)
+$sr = New-Object System.IO.StreamReader($gzip)
+$decrypted = $sr.ReadToEnd()
+$sr.Close()
+
+New-Module -ScriptBlock ([ScriptBlock]::Create($decrypted)) -Name PowerView
+
