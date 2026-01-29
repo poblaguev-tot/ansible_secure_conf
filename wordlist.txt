@@ -57,3 +57,20 @@ rpcclient -U "" <IP> -c "enumdomusers" \
     rpcclient -U "" <IP> -c "queryuser $rid" | grep -i description
 done
 
+grep -RIn --color=auto \
+"password\|passwd\|pwd\|user\|username\|login\|admin\|service\|credential\|secret\|token\|key" \
+./
+
+find ./ -type f \( -name "*.ps1" -o -name "*.bat" -o -name "*.cmd" \) \
+-exec grep -In --color=auto \
+"password\|passwd\|pwd\|secret\|token\|key" {} +
+
+find ./SYSVOL -type f \( \
+-name "Groups.xml" \
+-o -name "Services.xml" \
+-o -name "Scheduledtasks.xml" \
+-o -name "DataSources.xml" \
+-o -name "Drives.xml" \
+-o -name "Printers.xml" \
+\)
+
